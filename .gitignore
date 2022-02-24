@@ -1,0 +1,3 @@
+*.docx
+!src
+compile/**
