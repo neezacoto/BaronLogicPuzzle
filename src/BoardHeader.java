@@ -4,7 +4,7 @@
 public class BoardHeader {
 	private Collection data;
 
-	BoardHeader(int size) {
+	public BoardHeader(int size) {
 		this.data = new Collection(size);
 	}
 

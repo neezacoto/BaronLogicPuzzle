@@ -35,6 +35,7 @@ public class Tester extends Application {
 
 				// make a 3x4 board
 				Board board = new Board(3, 4);
+				GameLogic game = new GameLogic();
 
 				BorderPane root = new BorderPane();
 				final double padding = 20.0f;

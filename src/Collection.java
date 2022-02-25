@@ -2,11 +2,11 @@ public class Collection {
 	private String header;
 	private String[] fields;
 
-	Collection (int size) {
+	public Collection (int size) {
 
 	}
 
-	Collection (String collectionName) {
+	public Collection (String collectionName) {
 		this.header = collectionName;
 		this.fields = CSVReader.readFile("../src/" + collectionName + "csv");
 	}

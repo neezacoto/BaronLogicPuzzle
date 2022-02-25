@@ -57,4 +57,10 @@ public class Grid extends TilePane {
 			// }
 		}
 	}
+
+	public void resetGrid() {
+		for (int i = 0; i < this.getChildren().size(); i++) {
+			((Label) this.getChildren().get(i)).setText("   ");
+		}
+	}
 }
