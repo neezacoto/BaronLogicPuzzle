@@ -8,7 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.net.URL;
@@ -17,8 +18,14 @@ import java.util.ResourceBundle;
 public class SceneController implements Initializable{
     @FXML
     private ChoiceBox<String> boardSizes;
-
+    
     private String[] sizes = {"3x4"};
+
+    @FXML
+    private TextArea myCluesView;
+
+    String[] clues = {"There are jomba beans under 4th street","perhaps invest in a fridge","there are two animals that are egg","how many waters should you drink, yes!", "Survey says: what the dog doing?"};
+
 
     private Stage stage;
     private Scene scene;
@@ -30,7 +37,19 @@ public class SceneController implements Initializable{
             boardSizes.getItems().addAll(sizes);
         }
             
-    } 
+        if(myCluesView != null){
+            
+            myCluesView.setText(clueCompile());
+        }
+    }
+    
+    public String clueCompile(){
+        String cluesText = "\n";
+        for(String clue: clues){
+            cluesText += " • "+clue+"\n\n";
+        }
+        return cluesText;
+    }
 
     public void switchToSceneMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("MenuArea.fxml"));
@@ -47,6 +66,18 @@ public class SceneController implements Initializable{
         stage.setScene(scene);
         stage.show();
        }
+
+    public void hint(ActionEvent event){
+
+    }
+
+    public void clearErrors(ActionEvent event){
+
+    }
+
+    public void startOver(ActionEvent event){
+
+    }
 
     
 
