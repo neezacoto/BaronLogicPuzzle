@@ -1,5 +1,5 @@
 /**
- * @author: Arjun
+ * @author Arjun
  * 2/25/2022
  */
 

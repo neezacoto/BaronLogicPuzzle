@@ -99,6 +99,7 @@ public class SceneController implements Initializable{
         return cluesText;
     }
 
+    
    /**
      * 
      * @param event action event triggered by the main menu button
@@ -134,6 +135,8 @@ public class SceneController implements Initializable{
         alert.setTitle("Hint");
         //code goes here
         alert.setHeaderText("Please you deodarant <3");
+        alert.setContentText("click 'ok' to close:");
+        alert.showAndWait();
 
     }
 
@@ -143,7 +146,7 @@ public class SceneController implements Initializable{
      * clears button errors
      */
     public void clearErrors(ActionEvent event){
-
+        
     }
 
     /**
