@@ -13,7 +13,7 @@
             <Font size="50.0" />
          </font>
       </Label>
-      <Button layoutX="237.0" layoutY="227.0" mnemonicParsing="false" onAction="#switchToSceneGame" text="Start Game">
+      <Button fx:id="startButton" disable="true" layoutX="237.0" layoutY="227.0" mnemonicParsing="false" onAction="#switchToSceneGame" text="Start Game">
          <font>
             <Font size="20.0" />
          </font>

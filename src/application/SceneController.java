@@ -7,9 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.net.URL;
@@ -24,6 +28,15 @@ public class SceneController implements Initializable{
     @FXML
     private TextArea myCluesView;
 
+    @FXML
+    private Button startButton;
+
+    @FXML
+    private BorderPane boardArea;
+
+    @FXML 
+    private Board playerBoard;
+
     String[] clues = {"There are jomba beans under 4th street","perhaps invest in a fridge","there are two animals that are egg","how many waters should you drink, yes!", "Survey says: what the dog doing?"};
 
 
@@ -35,10 +48,11 @@ public class SceneController implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {   
         if(boardSizes != null){
             boardSizes.getItems().addAll(sizes);
+            boardSizes.setOnAction(this::setSize);
         }
             
         if(myCluesView != null){
-            
+            boardArea.setCenter(new Board(3,4));
             myCluesView.setText(clueCompile());
         }
     }
@@ -66,6 +80,11 @@ public class SceneController implements Initializable{
         stage.setScene(scene);
         stage.show();
        }
+
+    public void setSize(ActionEvent event){
+        String chosenSize = boardSizes.getValue();
+        startButton.setDisable(false);
+    }
 
     public void hint(ActionEvent event){
 
