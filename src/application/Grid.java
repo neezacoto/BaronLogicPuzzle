@@ -19,19 +19,9 @@ public class Grid extends TilePane {
 		this.setVgap(gap);
 		this.setPrefColumns(size);
 		this.setBackground(new Background(new BackgroundFill(Color.DIMGRAY.darker().darker(), null, null)));
-		// double grayscale = Math.random();
-		// this.setBackground(new Background(new BackgroundFill(new Color(grayscale, grayscale, grayscale, 1), null, null)));
-		// this.setMaxWidth(size * cell_size);
-		// this.setMaxHeight(size * cell_size);
-		//
-		// this.setPrefWidth(size * cell_size);
-		// this.setPrefHeight(size * cell_size);
-
-		// for (int i = 0; i < size; i++) {
+	
 		for (int i = 0; i < size * size; i++) {
-			// for (int j = 0; j < size; j++) {
-				// this.getRowConstraints().add(new RowConstraints(cell_size));
-				// this.getColumnConstraints().add(new ColumnConstraints(cell_size));
+
 				final String spacing = "   ";
 				Label rect = new Label(spacing);
 				rect.setPrefSize(cell_size, cell_size);

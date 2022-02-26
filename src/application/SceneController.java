@@ -132,8 +132,8 @@ public class SceneController implements Initializable{
      */
     public void hint(ActionEvent event){
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Hint");
-        //code goes here
+        alert.setTitle("Hint"); //<----code goes here
+        
         alert.setHeaderText("Please you deodarant <3");
         alert.setContentText("click 'ok' to close:");
         alert.showAndWait();
@@ -146,6 +146,8 @@ public class SceneController implements Initializable{
      * clears button errors
      */
     public void clearErrors(ActionEvent event){
+
+        //code goes here
         
     }
 
@@ -160,7 +162,8 @@ public class SceneController implements Initializable{
         alert.setContentText("clicking 'ok' will wipe the board contents:");
 
         if(alert.showAndWait().get() == ButtonType.OK) {
-            //code goes here
+
+            //code goes here clearing board
 
         }
     }
@@ -173,6 +176,7 @@ public class SceneController implements Initializable{
 
     public void alert(ActionEvent event){
 
+        //win alert
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Winner Winner Chicken Dinner ! ! ! ! ! ! !");
         alert.setHeaderText("Congradulations you've won!");
@@ -180,7 +184,6 @@ public class SceneController implements Initializable{
 
         if(alert.showAndWait().get() == ButtonType.OK) {
             stage = (Stage) scenePane.getScene().getWindow();
-            System.out.println("bruh");
             stage.close();
 
         }
@@ -193,6 +196,7 @@ public class SceneController implements Initializable{
      * undos the last move
      */
     public void undo(ActionEvent event){
+
         //code goes here
     }
 
