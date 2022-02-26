@@ -35,7 +35,7 @@
    <bottom>
       <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="774.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Button fx:id="hint" mnemonicParsing="false" onAction="#alert" text="Hint">
+            <Button fx:id="hint" mnemonicParsing="false" onAction="#hint" text="Hint">
                <font>
                   <Font size="16.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#clearErrors" text="Clear Errors">
+            <Button fx:id="clearErrors" mnemonicParsing="false" onAction="#alert" text="Clear Errors">
                <font>
                   <Font size="16.0" />
                </font>
@@ -51,7 +51,7 @@
                   <Insets left="30.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#startOver" text="Start Over">
+            <Button fx:id="startOver" mnemonicParsing="false" onAction="#startOver" text="Start Over">
                <font>
                   <Font size="16.0" />
                </font>
