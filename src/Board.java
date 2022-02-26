@@ -73,6 +73,10 @@ public class Board extends GridPane {
 		this.add(this.grids[1], 2, 1);
 		this.add(this.grids[2], 1, 2);
 	}
+
+	public String[][] getCollection(){
+		return collections;
+	}
 		/**
 		 * @author Christian
 		 * Responsible for creating the vertical headers for the board

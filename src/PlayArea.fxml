@@ -77,13 +77,13 @@
             <Insets bottom="10.0" left="10.0" right="20.0" top="20.0" />
          </BorderPane.margin>
          <top>
-            <SplitPane dividerPositions="0.5" prefHeight="104.0" prefWidth="516.0" BorderPane.alignment="CENTER">
+            <SplitPane fx:id="topPane" dividerPositions="0.5" prefHeight="104.0" prefWidth="516.0" BorderPane.alignment="CENTER">
               <items>
                   <BorderPane prefHeight="100.0" prefWidth="201.0" style="-fx-border-color: black;">
                      <top>
                         <VBox alignment="CENTER" prefHeight="0.0" prefWidth="367.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
                            <children>
-                              <Label contentDisplay="CENTER" style="-fx-background-color: black; -fx-font-weight: bold;" text="Label" textFill="WHITE">
+                              <Label contentDisplay="CENTER" style="-fx-background-color: none; -fx-font-weight: bold;" text="Label" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -150,7 +150,7 @@
                      <top>
                         <VBox alignment="CENTER" prefHeight="0.0" prefWidth="367.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
                            <children>
-                              <Label contentDisplay="CENTER" style="-fx-background-color: black; -fx-font-weight: bold;" text="Label" textFill="WHITE">
+                              <Label contentDisplay="CENTER" style="-fx-background-color: none; -fx-font-weight: bold;" text="Label" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -161,7 +161,7 @@
                      <center>
                         <HBox prefHeight="79.0" prefWidth="314.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: hidden solid; -fx-border-color: black;">
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: none solid; -fx-border-color: black;">
                                  <children>
                                     <Label alignment="CENTER" rotate="-90.0" text="Label">
                                        <font>
@@ -173,7 +173,7 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: hidden solid; -fx-border-color: black;">
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: none solid; -fx-border-color: black;">
                                  <children>
                                     <Label alignment="CENTER" rotate="-90.0" text="Label">
                                        <font>
@@ -185,7 +185,7 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: hidden solid; -fx-border-color: black;">
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: none solid; -fx-border-color: black;">
                                  <children>
                                     <Label alignment="CENTER" rotate="-90.0" text="Label">
                                        <font>
@@ -197,7 +197,7 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: hidden solid; -fx-border-color: black;">
+                              <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-style: none solid; -fx-border-color: black;">
                                  <children>
                                     <Label alignment="CENTER" rotate="-90.0" text="Label">
                                        <font>
@@ -220,13 +220,13 @@
             </SplitPane>
          </top>
          <left>
-            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="299.0" prefWidth="136.0" BorderPane.alignment="CENTER">
+            <SplitPane fx:id="leftPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="299.0" prefWidth="136.0" BorderPane.alignment="CENTER">
                <items>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
                      <left>
-                        <HBox alignment="CENTER" prefHeight="146.0" prefWidth="43.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
                            <children>
-                              <Label alignment="CENTER" rotate="-90.0" style="-fx-background-color: black; -fx-font-weight: bold; -fx-font-size: 15;" text="Label" textFill="WHITE">
+                              <Label maxWidth="-Infinity" minWidth="-Infinity" rotate="-90.0" style="-fx-background-color: none; -fx-font-weight: bold; -fx-font-size: 15;" text="Header0" textFill="WHITE" textOverrun="CLIP">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -239,22 +239,38 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <VBox.margin>
+                                          <Insets left="3.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <VBox.margin>
+                                          <Insets left="3.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
                            </children>
@@ -263,9 +279,9 @@
                   </BorderPane>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
                      <left>
-                        <HBox alignment="CENTER" prefHeight="297.0" prefWidth="42.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
                            <children>
-                              <Label alignment="CENTER" rotate="-90.0" style="-fx-background-color: black; -fx-font-weight: bold; -fx-font-size: 15;" text="Label" textFill="WHITE">
+                              <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" rotate="-90.0" style="-fx-background-color: none; -fx-font-weight: bold; -fx-font-size: 15;" text="Label" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -278,22 +294,38 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: black;">
                                  <children>
-                                    <Label text="Label" />
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </VBox>
                            </children>
