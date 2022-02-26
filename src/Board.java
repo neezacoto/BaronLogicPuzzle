@@ -63,11 +63,11 @@ public class Board extends GridPane {
 
 		// Christian
 
-		this.add(new VHeader(collections[0]), 0, 1);
-		this.add(new VHeader(collections[1]), 0, 2);
+		// this.add(new VHeader(collections[0]), 0, 1);
+		// this.add(new VHeader(collections[1]), 0, 2);
 
-		this.add(new HHeader(collections[2]), 1, 0);
-		this.add(new HHeader(collections[1]), 2, 0);
+		// this.add(new HHeader(collections[2]), 1, 0);
+		// this.add(new HHeader(collections[1]), 2, 0);
 
 		this.add(this.grids[0], 1, 1);
 		this.add(this.grids[1], 2, 1);
