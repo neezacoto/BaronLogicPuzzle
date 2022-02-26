@@ -185,7 +185,15 @@ public class SceneController implements Initializable{
 
         }
 
-        
+    }
+
+    /**
+     * 
+     * @param event fired by the undo event
+     * undos the last move
+     */
+    public void undo(ActionEvent event){
+        //code goes here
     }
 
     /**

@@ -21,7 +21,7 @@
                   <Insets left="10.0" />
                </VBox.margin>
             </Label>
-            <TextArea fx:id="myCluesView" editable="false" focusTraversable="false" prefHeight="295.0" prefWidth="208.0" style="-fx-focus-color: transparent; -fx-font-weight: bold; -fx-font-size: 12;" wrapText="true">
+            <TextArea fx:id="myCluesView" editable="false" focusTraversable="false" prefHeight="411.0" prefWidth="208.0" style="-fx-focus-color: transparent; -fx-font-weight: bold; -fx-font-size: 12;" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
@@ -52,6 +52,14 @@
                </HBox.margin>
             </Button>
             <Button fx:id="startOver" mnemonicParsing="false" onAction="#startOver" text="Start Over">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="undo" mnemonicParsing="false" onAction="#undo" text="Undo">
                <font>
                   <Font size="16.0" />
                </font>
