@@ -7,17 +7,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.xml.namespace.QName;
 
 public class SceneController implements Initializable{
     @FXML
@@ -36,6 +42,12 @@ public class SceneController implements Initializable{
 
     @FXML 
     private Board playerBoard;
+
+    @FXML
+    private Button hint;
+
+    @FXML
+    private BorderPane scenePane;
 
     String[] clues = {"There are jomba beans under 4th street","perhaps invest in a fridge","there are two animals that are egg","how many waters should you drink, yes!", "Survey says: what the dog doing?"};
 
@@ -78,11 +90,13 @@ public class SceneController implements Initializable{
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Logic Game");
         stage.show();
        }
 
     public void setSize(ActionEvent event){
-        String chosenSize = boardSizes.getValue();
+        //could be utilized in future iterations to change size
+        String chosenSize = boardSizes.getValue(); 
         startButton.setDisable(false);
     }
 
@@ -96,6 +110,23 @@ public class SceneController implements Initializable{
 
     public void startOver(ActionEvent event){
 
+    }
+
+    public void alert(ActionEvent event){
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Winner Winner Chicken Dinner ! ! ! ! ! ! !");
+        alert.setHeaderText("Congradulations you've won!");
+        alert.setContentText("You've completed the game (clicking 'ok' will close the game):");
+
+        if(alert.showAndWait().get() == ButtonType.OK) {
+            stage = (Stage) scenePane.getScene().getWindow();
+            System.out.println("bruh");
+            stage.close();
+
+        }
+
+        
     }
 
     

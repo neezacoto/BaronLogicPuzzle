@@ -183,7 +183,7 @@ public class Board extends GridPane {
             //adding labels to the subject list to populate the cols
             for(int i=0; i<subjects.length;i++){
                  Label entry = new Label(labels[i]);
-                 entry.setMinHeight(30);
+                 entry.setMinHeight(50);
                  entry.setRotate(-90);
                  subjects[i] = entry;
             }
@@ -199,7 +199,7 @@ public class Board extends GridPane {
             this.setTop(header);
             header.getChildren().add(cat);
             
-            this.setAlignment(cols, Pos.CENTER);
+            this.setAlignment(cols, Pos.TOP_CENTER);
             this.setAlignment(cat, Pos.CENTER);
             cols.setAlignment(Pos.CENTER);
             header.setAlignment(Pos.CENTER);
