@@ -13,12 +13,19 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.Node;
+
+/**
+ * @author: Christian
+ */
 
 public class Grid extends TilePane {
-	public static final double cell_size = 25 * 1.5;
+	private static final double cell_size = 25 * 1.5;
+	private int size;
 
 	Grid(int size) {
-		System.out.println("grid");
+		// System.out.println("grid");
+		this.size = size;
 		double gap = 5.0d;
 		this.setHgap(gap);
 		this.setVgap(gap);
@@ -26,36 +33,66 @@ public class Grid extends TilePane {
 		this.setBackground(new Background(new BackgroundFill(Color.DIMGRAY.darker().darker(), null, null)));
 		// double grayscale = Math.random();
 		// this.setBackground(new Background(new BackgroundFill(new Color(grayscale, grayscale, grayscale, 1), null, null)));
-		// this.setMaxWidth(size * cell_size);
-		// this.setMaxHeight(size * cell_size);
-		//
-		// this.setPrefWidth(size * cell_size);
-		// this.setPrefHeight(size * cell_size);
-
-		// for (int i = 0; i < size; i++) {
 		for (int i = 0; i < size * size; i++) {
-			// for (int j = 0; j < size; j++) {
-				// this.getRowConstraints().add(new RowConstraints(cell_size));
-				// this.getColumnConstraints().add(new ColumnConstraints(cell_size));
-				final String spacing = "   ";
-				Label rect = new Label(spacing);
-				rect.setPrefSize(cell_size, cell_size);
-				rect.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-				rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						System.out.println("click");
-						if (rect.getText().equals(spacing))
-							rect.setText(spacing + "X");
-						else if (rect.getText().equals(spacing + "X")) {
-							rect.setText(spacing + "O");
-						} else rect.setText(spacing);
+			final String spacing = "   ";
+			Label cell = new Label(spacing);
+			cell.setPrefSize(cell_size, cell_size);
+			cell.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+			cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					int grid = -1;
+					Board board = (Board) getParent();
+					for (int i = 0; i < board.size(); i++) {
+						if (board.getGrid(i) == Grid.this)
+							grid = i;
 					}
-				});
-				// this.add(rect, i, j);
-				this.getChildren().add(rect);
-			// }
+
+					Node label = (Node) ((event.getTarget() instanceof Label) ? event.getTarget() : ((Node) event.getTarget()).getParent());
+
+					int test = Grid.this.getChildren().indexOf(label);
+					GameLogic.getInstance().cellClicked(grid, (test - test % Grid.this.size)/Grid.this.size, test % Grid.this.size);
+
+					// if (cell.getText().equals(spacing))
+					// 	cell.setText(spacing + "X");
+					// else if (cell.getText().equals(spacing + "X")) {
+					// 	cell.setText(spacing + "O");
+					// } else cell.setText(spacing);
+				}
+			});
+			this.getChildren().add(cell);
 		}
+	}
+
+	public int getCell(int row, int column) {
+		String str = ((Label) this.getChildren().get(row * this.size + column)).getText();
+		char val = str.substring(str.length() - 1).charAt(0);
+
+		switch (val) {
+			case 'O':
+				return 1;
+			case 'X':
+				return 2;
+			default:
+				return 0;
+		}
+	}
+
+	public void setCell(int row, int column, int value) {
+		char val;
+		switch(value) {
+			case 1:
+			case 3:
+				val = 'O';
+				break;
+			case 2:
+			case 4:
+				val = 'X';
+				break;
+			default:
+				val = ' ';
+		}
+		((Label) this.getChildren().get(row * this.size + column)).setText("   " + val);
 	}
 
 	public void resetGrid() {

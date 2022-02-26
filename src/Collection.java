@@ -6,9 +6,12 @@ public class Collection {
 
 	}
 
-	public Collection (String collectionName) {
+	public Collection (String collectionName, int size) {
 		this.header = collectionName;
-		this.fields = CSVReader.readFile("../src/" + collectionName + "csv");
+		this.fields = new String[size];
+
+
+		CSVReader.readFile("../src/" + collectionName + "csv");
 	}
 
 	public String getHeader() {
