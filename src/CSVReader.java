@@ -1,4 +1,4 @@
-package application;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -17,7 +17,7 @@ public class CSVReader {
 			return buffer.split(",");
 		} catch (IOException e) {
 			System.out.println("IOException! " + e.getMessage());
-return null;
+			return null;
 		} catch (Exception e) {
 			System.out.println("Exception! " + e.getMessage());
 			return null;

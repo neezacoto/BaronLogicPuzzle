@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="505.0" minWidth="774.0" prefHeight="505.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/8.0.301" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
+<BorderPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="505.0" minWidth="774.0" prefHeight="505.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/8.0.301" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SceneController">
    <right>
       <VBox prefHeight="333.0" prefWidth="208.0" BorderPane.alignment="CENTER">
          <children>
