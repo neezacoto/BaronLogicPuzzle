@@ -44,7 +44,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="clearErrors" mnemonicParsing="false" onAction="#alert" text="Clear Errors">
+            <Button fx:id="clearErrors" mnemonicParsing="false" onAction="#clearErrors" text="Clear Errors">
                <font>
                   <Font size="16.0" />
                </font>

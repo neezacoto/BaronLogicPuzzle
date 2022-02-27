@@ -119,7 +119,7 @@ public class SceneController implements Initializable {
 		 * 		Split pane
 		 * 			BorderPane (cell)
 		 * 			BorderPane (cell)
-		 * 				Vbox (header TOP) 
+		 * 				Vbox (header TOP)
 		 * 					Label (category)
 		 * 				HBox (fields CENTER)
 		 * 					HBox
@@ -127,7 +127,7 @@ public class SceneController implements Initializable {
 		 * 					HBox
 		 * 					HBox
 		 * 					HBox
-		 * 
+		 *
 		 * LeftPane:
 		 *  	Split pane
 		* 			BorderPane (cell)
@@ -139,7 +139,7 @@ public class SceneController implements Initializable {
 								Label
 		* 					VBox
 		* 					VBox
-		* 					VBox			
+		* 					VBox
 		*/
 
 		/**
@@ -167,7 +167,7 @@ public class SceneController implements Initializable {
 			for(int j = 0; j< fields.size();j++ ) {
 				((Label)((HBox) fields.get(j)).getChildren().get(0)).setText(boardInfo[i][j+1]);
 			}
-			
+
 		}
 
 		ArrayList<Node> Vcells = new ArrayList<>(leftPane.getItems());// gets vertical headers
@@ -188,7 +188,7 @@ public class SceneController implements Initializable {
 	 * formats strings to be presented in clues box
 	 */
 	public String clueCompile(String[] clues) {
-		
+
 
 			String cluesText = "\n";
 			for(String clue : clues) {
@@ -228,13 +228,8 @@ public class SceneController implements Initializable {
 	 * @param event fires from hint button
 	 * creates a hint for the player
 	 */
-	public void hint(ActionEvent event){
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Hint"); // <----code goes here
-
-		alert.setHeaderText("Please you deodarant <3");
-		alert.setContentText("click 'ok' to close:");
-		alert.showAndWait();
+	public void hint(ActionEvent event) {
+		myCluesView.setText(clueCompile(GameLogic.getInstance().hint()));
 	}
 
 	/**
@@ -243,7 +238,7 @@ public class SceneController implements Initializable {
 	 * clears button errors
 	 */
 	public void clearErrors(ActionEvent event) {
-			// code goes here
+			GameLogic.getInstance().clearErrors();
 	}
 
 	/**

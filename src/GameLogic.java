@@ -21,6 +21,8 @@ public class GameLogic {
 	private int[] correctCells;
 	private int[] cells;
 	private Board board;
+	private String[] clues;
+	private int clueIndex;
 
 	public static GameLogic getInstance() {
 		return instance;
@@ -82,7 +84,7 @@ public class GameLogic {
 		String[][] collections = this.board.getCollection();
 		ArrayList<String> clueBuffer = new ArrayList<String>();
 		for(int i=0;i<this.correctCells.length;i++){
-			
+
 			int grid = (i - i % (this.board.gridSize() * this.board.gridSize())) / (this.board.gridSize() * this.board.gridSize());
 			int row = (i - i % (this.board.gridSize())) / (this.board.gridSize()) % this.board.gridSize();
 			//int row = (i - grid * this.board.gridSize() * this.board.gridSize()) % this.board.gridSize();
@@ -99,15 +101,15 @@ public class GameLogic {
 				switch(grid){
 					case 0:
 						clueBuffer.add(collections[0][col+1] + " " + collections[2][row+1]);
-						
+
 						break;
 					case 1:
 						clueBuffer.add(collections[2][row+1] + " " + collections[1][col+1]);
-					
+
 						break;
 					case 2:
 						clueBuffer.add(collections[0][col+1] + " " + collections[1][row+1]);
-						
+
 						break;
 
 				}
@@ -124,11 +126,26 @@ public class GameLogic {
 		// 	"Another clue",
 		// 	"A third clue"
 		// };
-			String[] ret = new String[clueBuffer.size()]; 
-			for(int i = 0; i<ret.length;i++){
-				ret[i] = clueBuffer.get(i);
+			String[] ret = new String[clueBuffer.size()];
+			for(int i = 0; i < ret.length; i++){
+				ret[i] = clueBuffer.remove((int) Math.floor(Math.random() * clueBuffer.size()));
 			}
-		return ret;
+
+		this.clues = ret;
+		this.clueIndex = numberOfClues - 2;
+
+		return this.hint();
+	}
+
+	public String[] hint() {
+		if (this.clueIndex < this.clues.length - 1) {
+			this.clueIndex++;
+			String[] clueBuffer = new String[this.clueIndex + 1];
+			for (int i = 0; i <= this.clueIndex; i++) {
+				clueBuffer[i] = this.clues[i];
+			}
+			return clueBuffer;
+		} else return this.clues;
 	}
 
 	// method to search cells in row of grid
@@ -202,6 +219,32 @@ public class GameLogic {
 		return cellValue == BLANK || cellValue == SOLID_TRUE || cellValue == SOLID_FALSE;
 	}
 
+
+	public void clearErrors(){
+        System.out.println("hello");
+
+        for (int i = 0; i < this.board.size(); i++) {
+            for (int j = 0; j < this.board.gridSize(); j++) {
+                for (int k = 0; k < this.board.gridSize(); k++) {
+                    if (((this.getCell(i, j, k) == SOLID_TRUE) && (this.getCorrectCell(i, j, k) != SOLID_TRUE)) ||
+                        ((this.getCell(i, j, k) == TEMP_TRUE) && (this.getCell(i, j, k) != SOLID_TRUE))) {
+                            this.setCell(i, j, k, BLANK);
+                    }
+                }
+            }
+        }
+        // update the board
+        for (int i = 0; i < this.board.size(); i++) {
+            for (int j = 0; j < this.board.gridSize(); j++) {
+                for (int k = 0; k < this.board.gridSize(); k++) {
+                    this.board.getGrid(i).setCell(j, k, this.getCell(i, j, k));
+                }
+            }
+        }
+
+    }
+
+
 	/*
 		When we click on a blank cell
 		That cell becomes a temp X
@@ -273,25 +316,54 @@ public class GameLogic {
 					}
 					this.setCell(grid, row, column, TEMP_TRUE);
 				}
-				boolean win = true;
-				for (int i = 0; win && i < this.board.size(); i++) {
-					for (int j = 0; win && j < this.board.gridSize(); j++) {
-						for (int k = 0; win && k < this.board.gridSize(); k++) {
-							if(this.getCorrectCell(i, j, k) == SOLID_TRUE && this.getCell(i, j, k) != SOLID_TRUE || this.getCell(i, j, k) != TEMP_TRUE){	
-								win = false;
-								System.out.println(i+" "+ j + " " + k);
+
+				//checks the correct number of spaces
+				int correctNum = 0;
+					for (int i = 0;i < this.board.size(); i++) {
+						for (int j = 0; j < this.board.gridSize(); j++) {
+							for (int k = 0; k < this.board.gridSize(); k++) {
+								if(this.getCorrectCell(i, j, k) == SOLID_TRUE){
+									correctNum++;
+								}
 							}
 						}
 					}
-				}
-				if(win && SceneController.getInstance() != null ){
-					SceneController.getInstance().alert();
-				}
+					//checks to see if all the correct sp
+					int currentNum = 0;
+					for (int i = 0;i < this.board.size(); i++) {
+						for (int j = 0; j < this.board.gridSize(); j++) {
+							for (int k = 0; k < this.board.gridSize(); k++) {
+								if(((this.getCorrectCell(i, j, k) == SOLID_TRUE) && (this.getCell(i, j, k) == SOLID_TRUE)) ||
+									((this.getCorrectCell(i, j, k) == SOLID_TRUE) && (this.getCell(i, j, k) == TEMP_TRUE))){
+									currentNum++;
+									}
+							}
+						}
+					}
+
+					if(currentNum == correctNum){
+						SceneController.getInstance().alert();
+					}
+				// boolean win = true;
+				// for (int i = 0; win && i < this.board.size(); i++) {
+				// 	for (int j = 0; win && j < this.board.gridSize(); j++) {
+				// 		for (int k = 0; win && k < this.board.gridSize(); k++) {
+				// 			if( ((this.getCorrectCell(i, j, k) == SOLID_TRUE) && (this.getCell(i, j, k) != SOLID_TRUE)) ||
+				// 				((this.getCorrectCell(i, j, k) == SOLID_TRUE) && (this.getCell(i, j, k) != TEMP_TRUE))){
+				// 				win = false;
+				// 				System.out.println(i+" "+ j + " " + k);
+				// 			}
+				// 		}
+				// 	}
+				// }
+				// if(win && SceneController.getInstance() != null ){
+				// 	SceneController.getInstance().alert();
+				// }
 				break;
 		}
-	//	this.board.getGrid(grid).setCell(row, column, this.getCorrectCell(grid, row, column));
+		this.board.getGrid(grid).setCell(row, column, this.getCorrectCell(grid, row, column));
 		// is solid?
-		if (cellValue == BLANK || cellValue == SOLID_TRUE || cellValue == SOLID_FALSE) {
+		if (isSolid(grid, row, column)) {
 			System.out.println("soldify");
 			for (int i = 0; i < this.board.size(); i++) {
 				for (int j = 0; j < this.board.gridSize(); j++) {
