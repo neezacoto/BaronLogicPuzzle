@@ -4,14 +4,7 @@
  */
 
 import java.util.ArrayList;
-
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  * Responsible for redering the grids from Grid.java into a table
@@ -60,119 +53,41 @@ public class Board extends GridPane {
 			}
 		}
 
-
-		// Christian
-
-		// this.add(new VHeader(collections[0]), 0, 1);
-		// this.add(new VHeader(collections[1]), 0, 2);
-
-		// this.add(new HHeader(collections[2]), 1, 0);
-		// this.add(new HHeader(collections[1]), 2, 0);
-
 		this.add(this.grids[0], 1, 1);
 		this.add(this.grids[1], 2, 1);
 		this.add(this.grids[2], 1, 2);
 	}
 
-	public String[][] getCollection(){
-		return collections;
-	}
-		/**
-		 * @author Christian
-		 * Responsible for creating the vertical headers for the board
-		 */
-		private class VHeader extends BorderPane{
 
-			VHeader(String[] labels) {
-					super();
-					Label subjects[] = new Label[labels.length - 1]; // ist of all labels to use
-					Label cat = new Label(labels[0]); // creating label for category
-					cat.setRotate(-90);
-
-
-					VBox rows = new VBox(25); // rows to go down
-					rows.setPadding(new Insets(0, 0, 0, 3));
-
-					// adding labels to the subject list to populate the rows
-					for(int i = 0; i < subjects.length; i++) {
-							 Label entry = new Label(labels[i + 1]);
-							 subjects[i] = entry;
-					}
-
-					cat.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
-
-					rows.getChildren().addAll(subjects);
-					this.setCenter(rows);
-
-					VBox header = new VBox(1); // header (left)
-					header.setStyle("-fx-background-color: black;");
-
-					this.setLeft(header);
-					header.getChildren().add(cat);
-
-					this.setAlignment(rows, Pos.CENTER);
-					this.setAlignment(cat, Pos.CENTER);
-					rows.setAlignment(Pos.CENTER);
-					header.setAlignment(Pos.CENTER);
-
-			}
-
-		}
-
-		/**
-		 * @author Christian
-		 * Responsible for creating the horizontal headers for the board
-		 */
-		private class HHeader extends BorderPane {
-
-			HHeader(String[] labels) {
-					super();
-					Label subjects[] = new Label[labels.length - 1]; // list of all labels to use
-					Label cat = new Label(labels[0]); // creating label for category
-
-
-
-					HBox cols = new HBox(25); // cols labels
-					cols.setPadding(new Insets(0, 0, 0, 3));
-
-					// adding labels to the subject list to populate the cols
-					for(int i = 0; i < subjects.length; i++) {
-							 Label entry = new Label(labels[i + 1]);
-							 entry.setMinHeight(100);
-							 entry.setRotate(-90);
-							 subjects[i] = entry;
-					}
-
-					cat.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
-
-					cols.getChildren().addAll(subjects);
-					this.setCenter(cols);
-
-					HBox header = new HBox(1);//header (top)
-					header.setStyle("-fx-background-color: black;");
-
-					this.setTop(header);
-					header.getChildren().add(cat);
-
-					this.setAlignment(cols, Pos.TOP_CENTER);
-					this.setAlignment(cat, Pos.CENTER);
-					cols.setAlignment(Pos.CENTER);
-					header.setAlignment(Pos.CENTER);
-			}
-		}
-
+	/**
+	 * 
+	 * @return the size of the board
+	 */
 	public int size() {
 		return this.size;
 	}
 
+	/**
+	 * 
+	 * @return size of each grid
+	 */
 	public int gridSize() {
 		return this.gridSize;
 	}
 
+	/**
+	 * 
+	 * @return the puzzle information
+	 */
 	public String[][] getCollections() {
 		return this.collections;
 	}
 
+	/**
+	 * 
+	 * @param index index of the grid (e.g 3x4: 0,1,2)
+	 * @return
+	 */
 	public Grid getGrid(int index) {
 		return this.grids[index];
 	}

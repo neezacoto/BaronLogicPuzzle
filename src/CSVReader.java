@@ -1,10 +1,13 @@
-
+/**
+ *@author Arjun
+ 2/26/2022
+ */
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
 /**
- *@author
+ * responsible for reading in puzzles and parsing them.
  */
 public class CSVReader {
 	public static String[] readFile (String filename) {

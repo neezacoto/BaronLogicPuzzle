@@ -1,13 +1,10 @@
 /**
  * @author Christian Rudder
- * 2/25/2022
+ * 2/26/2022
  */
 
 import java.io.IOException;
-
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -70,30 +67,34 @@ public class SceneController implements Initializable {
 	@FXML
 	private BorderPane scenePane;
 
+	//top header area
 	@FXML
 	private SplitPane topPane;
 
+	//left header area
 	@FXML
 	private SplitPane leftPane;
 
+	//undo button
 	@FXML
 	private Button undo;
-
-
-	// String[] clues = {"There are jomba beans under 4th street","perhaps invest in a fridge","there are two animals that are egg","how many waters should you drink, yes!", "Survey says: what the dog doing?"};
-
 
 	private static SceneController instance;
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
 
-
-	public SceneController(){
+	/**
+	 * setting an instance for scene controller
+	 */
+	public SceneController() {
 		instance = this;
 	}
 
-	public static SceneController getInstance(){
+	/**
+	 * @return an intance of SceneController
+	 */
+	public static SceneController getInstance() {
 		return instance;
 	}
 
@@ -116,6 +117,9 @@ public class SceneController implements Initializable {
 		}
 	}
 
+	/**
+	 * responible for poplating the header cells for the grid
+	 */
 	public void setHeaderCells(){
 		/**
 		 * TopPane:
@@ -145,23 +149,7 @@ public class SceneController implements Initializable {
 		* 					VBox
 		*/
 
-		/**
-		 * Label subjects[] = new Label[labels.length - 1]; // ist of all labels to use
-					Label cat = new Label(labels[0]); // creating label for category
-					cat.setRotate(-90);
-
-
-					VBox rows = new VBox(25); // rows to go down
-					rows.setPadding(new Insets(0, 0, 0, 3));
-
-					// adding labels to the subject list to populate the rows
-					for(int i = 0; i < subjects.length; i++) {
-							 Label entry = new Label(labels[i + 1]);
-							 subjects[i] = entry;
-					}
-		 */
-
-		String[][] boardInfo = GameLogic.getInstance().getBoard().getCollection(); //gets board information
+		String[][] boardInfo = GameLogic.getInstance().getBoard().getCollections(); //gets board information
 		ArrayList<Node> Hcells = new ArrayList<>(topPane.getItems());//gets top headers
 		for(int i = 0; i<Hcells.size();i++) {
 			((Label)(((VBox)(((BorderPane) Hcells.get(i)).getTop())).getChildren().get(0))).setText(boardInfo[i][0]);// sets header horizontal
@@ -286,7 +274,7 @@ public class SceneController implements Initializable {
 	 * undos the last move
 	 */
 	public void undo(ActionEvent event){
-		
+
 		GameLogic.getInstance().undo();
 
 	}
