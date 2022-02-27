@@ -76,6 +76,9 @@ public class SceneController implements Initializable {
 	@FXML
 	private SplitPane leftPane;
 
+	@FXML
+	private Button undo;
+
 
 	// String[] clues = {"There are jomba beans under 4th street","perhaps invest in a fridge","there are two animals that are egg","how many waters should you drink, yes!", "Survey says: what the dog doing?"};
 
@@ -283,7 +286,8 @@ public class SceneController implements Initializable {
 	 * undos the last move
 	 */
 	public void undo(ActionEvent event){
+		
+		GameLogic.getInstance().undo();
 
-			//code goes here
 	}
 }
