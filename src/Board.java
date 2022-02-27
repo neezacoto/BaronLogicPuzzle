@@ -34,6 +34,9 @@ public class Board extends GridPane {
 			"names",
 			"years",
 			"cities",
+			"phones",
+			"storms",
+			"events",
 		}) {
 			collectionsList.add(string);
 		}
@@ -60,7 +63,7 @@ public class Board extends GridPane {
 
 
 	/**
-	 * 
+	 *
 	 * @return the size of the board
 	 */
 	public int size() {
@@ -68,7 +71,7 @@ public class Board extends GridPane {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return size of each grid
 	 */
 	public int gridSize() {
@@ -76,7 +79,7 @@ public class Board extends GridPane {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the puzzle information
 	 */
 	public String[][] getCollections() {
@@ -84,7 +87,7 @@ public class Board extends GridPane {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param index index of the grid (e.g 3x4: 0,1,2)
 	 * @return
 	 */
