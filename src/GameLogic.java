@@ -1,4 +1,3 @@
-
 /**
  * @author Arjun
  * 2/26/2022
@@ -15,13 +14,11 @@ public class GameLogic {
 	public final int SOLID_FALSE = 2;
 	public final int TEMP_TRUE = 3;
 	public final int TEMP_FALSE = 4;
-
 	// cell values 0 - blank
 	// cell values 1 - O or true
 	// cell values 2 - X or false
 	// cell values 3 - temp O or temp true
 	// cell values 4 - temp X or temp false
-
 	private int[] correctCells; //correct reference for cells
 	private int[] cells; //current player board
 	private Board board; // the board to be used
@@ -62,7 +59,6 @@ public class GameLogic {
 		this.cells = new int[this.board.size() * this.board.gridSize() * this.board.gridSize()];
 		this.undoStates = new ArrayList<int[]>();
 
-
 		ArrayList<Integer> columns = new ArrayList<Integer>(4);
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			columns.add(i);
@@ -73,20 +69,17 @@ public class GameLogic {
 				// pick random column
 				int column = columns.remove((int) (Math.floor(Math.random() * columns.size())));
 				// set the other cells in the same row to be false
-
 				this.setRow(this.correctCells, grid, row, SOLID_FALSE);
 				// set the other cells in the same column to be false
 				this.setColumn(this.correctCells, grid, column, SOLID_FALSE);
 				// set that cell to be true
 				setCorrectCell(grid, row, column, SOLID_TRUE);
-
 			}
 
 			for (int i = 0; i < this.board.gridSize(); i++) {
 				columns.add(i);
 			}
 		}
-
 
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			int row = findCellInColumn(this.correctCells, 0, i, SOLID_TRUE);
@@ -180,12 +173,10 @@ public class GameLogic {
 	private int findCellInRow(int[] cells, int grid, int row, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			if (getCellInGiantArray(cells, grid, row, i) == value)
-
 				return i;
 		}
 		return -1;
 	}
-
 	/**
 	 *
 	 * @param cells all cells
@@ -197,12 +188,10 @@ public class GameLogic {
 	private int findCellInColumn(int[] cells, int grid, int column, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			if (getCellInGiantArray(cells, grid, i, column) == value)
-
 			return i;
 		}
 		return -1;
 	}
-
 
 	/**
 	 *
@@ -211,13 +200,11 @@ public class GameLogic {
 	 * @param row row index of cell
 	 * @param value value of cell (Blank, X, O...)
 	 */
-
 	private void setRow(int[] cells, int grid, int row, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			setCellInGiantArray(cells, grid, row, i, value);
 		}
 	}
-
 
 	/**
 	 *
@@ -226,13 +213,11 @@ public class GameLogic {
 	 * @param column  col for cell
 	 * @param value value of cell (Blank, X, O...)
 	 */
-
 	private void setColumn(int[] cells, int grid, int column, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			setCellInGiantArray(cells, grid, i, column, value);
 		}
 	}
-
 
 	/**
 	 *
@@ -243,11 +228,9 @@ public class GameLogic {
 	 * @return returns value of cell (Blank, X, O...)
 	 * responsible for getting a cell
 	 */
-
 	private int getCellInGiantArray(int[] cells, int gridIndex, int rowIndex, int columnIndex) {
 		return cells[gridIndex * this.board.gridSize() * this.board.gridSize() + rowIndex * this.board.gridSize() + columnIndex];
 	}
-
 
 	/**
 	 *
@@ -258,11 +241,9 @@ public class GameLogic {
 	 * @param value value of cell (Blank, X, O...)
 	 * responsible of setting cells
 	 */
-
 	private void setCellInGiantArray(int[] cells, int gridIndex, int rowIndex, int columnIndex, int value) {
 		cells[gridIndex * this.board.gridSize() * this.board.gridSize() + rowIndex * this.board.gridSize() + columnIndex] = value;
 	}
-
 
 /**
  *
@@ -271,12 +252,10 @@ public class GameLogic {
  * @param columnIndex col of cell
  * @return retruns the correct copy of the cell to reference
  */
-
 	public int getCorrectCell(int gridIndex, int rowIndex, int columnIndex) {
 		return this.getCellInGiantArray(this.correctCells, gridIndex, rowIndex, columnIndex);
 	}
 
-
 	/**
 	 *
 	 * @param gridIndex index of the grid
@@ -284,12 +263,10 @@ public class GameLogic {
 	 * @param columnIndex col cell of grid
 	 * @param value value of cell
 	 */
-
 	public void setCorrectCell(int gridIndex, int rowIndex, int columnIndex, int value) {
 		this.setCellInGiantArray(this.correctCells, gridIndex, rowIndex, columnIndex, value);
 	}
 
-
 	/**
 	 *
 	 * @param gridIndex index of the grid
@@ -297,12 +274,10 @@ public class GameLogic {
 	 * @param columnIndex col cell of grid
 	 * @param value value of cell
 	 */
-
 	public int getCell(int gridIndex, int rowIndex, int columnIndex) {
 		return this.getCellInGiantArray(this.cells, gridIndex, rowIndex, columnIndex);
 	}
 
-
 	/**
 	 *
 	 * @param gridIndex index of the grid
@@ -310,11 +285,9 @@ public class GameLogic {
 	 * @param columnIndex col cell of grid
 	 * @param value value of cell
 	 */
-
 	public void setCell(int gridIndex, int rowIndex, int columnIndex, int value) {
 		this.setCellInGiantArray(this.cells, gridIndex, rowIndex, columnIndex, value);
 	}
-
 
 	/**
 	 *
@@ -457,12 +430,10 @@ public class GameLogic {
 						SceneController.getInstance().alert();
 					}
 				}
-
 				break;
 		}
 
 		// is solid?
-
 		if (isSolid(cellValue)) {
 			for (int i = 0; i < this.board.size(); i++) {
 				for (int j = 0; j < this.board.gridSize(); j++) {
@@ -482,7 +453,6 @@ public class GameLogic {
 	 */
 	private void updateBoard() {
 		// update the board
-
 		for (int i = 0; i < this.board.size(); i++) {
 			for (int j = 0; j < this.board.gridSize(); j++) {
 				for (int k = 0; k < this.board.gridSize(); k++) {
@@ -491,5 +461,4 @@ public class GameLogic {
 			}
 		}
 	}
-
 }

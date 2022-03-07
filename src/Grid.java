@@ -4,11 +4,13 @@
  */
 
 import javafx.event.EventHandler;
-
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 
 /**
  * Responsible for creating the grids on the board

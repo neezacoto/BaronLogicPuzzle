@@ -1,4 +1,3 @@
-
 /**
  *@author Arjun
  2/26/2022
@@ -9,7 +8,6 @@ import java.util.Scanner;
 
 /**
  * responsible for reading in puzzles and parsing them.
-
  */
 public class CSVReader {
 	public static String[] readFile (String filename) {
@@ -22,9 +20,7 @@ public class CSVReader {
 			return buffer.split(",");
 		} catch (IOException e) {
 			System.out.println("IOException! " + e.getMessage());
-      
 			return null;
-
 		} catch (Exception e) {
 			System.out.println("Exception! " + e.getMessage());
 			return null;
