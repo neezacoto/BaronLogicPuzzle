@@ -1,10 +1,15 @@
+
+/**
+ *@author Arjun
+ 2/26/2022
+ */
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- *@author
+ * responsible for reading in puzzles and parsing them.
+
  */
 public class CSVReader {
 	public static String[] readFile (String filename) {
@@ -17,7 +22,9 @@ public class CSVReader {
 			return buffer.split(",");
 		} catch (IOException e) {
 			System.out.println("IOException! " + e.getMessage());
-return null;
+      
+			return null;
+
 		} catch (Exception e) {
 			System.out.println("Exception! " + e.getMessage());
 			return null;

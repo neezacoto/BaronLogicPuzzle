@@ -1,58 +1,67 @@
-import java.util.ArrayList;
 
 /**
- * @author
- * singleton
+ * @author Arjun
+ * 2/26/2022
+ *
+ */
+import java.util.ArrayList;
+/**
+ * GameLogic is responsible for the logic of the board, and sending inoframtion to and from the scene.
  */
 public class GameLogic {
 	private static GameLogic instance;
+	public final int BLANK = 0;
+	public final int SOLID_TRUE = 1;
+	public final int SOLID_FALSE = 2;
+	public final int TEMP_TRUE = 3;
+	public final int TEMP_FALSE = 4;
 
-	private String[] clues;
-	private String[] collections;
 	// cell values 0 - blank
 	// cell values 1 - O or true
 	// cell values 2 - X or false
 	// cell values 3 - temp O or temp true
 	// cell values 4 - temp X or temp false
-	private int[] correctCells;
-	private int[] cells;
-	private Board board;
-	private static String[] collectionNames = new String[] {
-		"names",
-		"years",
-		"cities",
-	};
 
+	private int[] correctCells; //correct reference for cells
+	private int[] cells; //current player board
+	private Board board; // the board to be used
+	private String[] clues; // clues to be used
+	private int clueIndex; // parsing for clues
+	private ArrayList<int[]> undoStates; //undo states
+
+	/**
+	 *
+	 * @return an instance of itself
+	 */
 	public static GameLogic getInstance() {
-		if (instance == null) instance = new GameLogic();
 		return instance;
 	}
-
-	public static GameLogic newInstance(Board board, int numberOfClues) {
-		instance = new GameLogic(board, numberOfClues);
+	/**
+	 *
+	 * @param board creates an instance of GameLogic
+	 * @return an instance of GameLogic
+	 */
+	public static GameLogic newInstance(Board board) {
+		instance = new GameLogic(board);
 		return instance;
 	}
-
+	/**
+	 * sets instance of the board that will be used
+	 */
 	private GameLogic() {
-		this(new Board(3, 4), 5);
+		this(new Board(3, 4));
 	}
 
-	private GameLogic(Board board, int numberOfClues) {
+	/**
+	 *
+	 * @param board takes in a board for the GameLogic to manipulate
+	 */
+	private GameLogic(Board board) {
 		this.board = board;
-		this.clues = new String[numberOfClues];
 		this.correctCells = new int[this.board.size() * this.board.gridSize() * this.board.gridSize()];
 		this.cells = new int[this.board.size() * this.board.gridSize() * this.board.gridSize()];
+		this.undoStates = new ArrayList<int[]>();
 
-		// pick size collections
-		this.collections = new String[this.board.size()];
-		ArrayList<String> collectionsList = new ArrayList<String>();
-		for (String string : collectionNames) {
-			collectionsList.add(string);
-		}
-
-		for (int i = 0; i < this.board.size(); i++) {
-			this.collections[i] = collectionsList.remove((int) Math.floor(Math.random() * collectionsList.size()));
-		}
 
 		ArrayList<Integer> columns = new ArrayList<Integer>(4);
 		for (int i = 0; i < this.board.gridSize(); i++) {
@@ -64,12 +73,13 @@ public class GameLogic {
 				// pick random column
 				int column = columns.remove((int) (Math.floor(Math.random() * columns.size())));
 				// set the other cells in the same row to be false
-				this.setRow(this.correctCells, grid, row, 2);
+
+				this.setRow(this.correctCells, grid, row, SOLID_FALSE);
 				// set the other cells in the same column to be false
-				this.setColumn(this.correctCells, grid, column, 2);
+				this.setColumn(this.correctCells, grid, column, SOLID_FALSE);
 				// set that cell to be true
-				setCorrectCell(grid, row, column, 1);
-				System.out.println(grid + ", " + row + ", " + column);
+				setCorrectCell(grid, row, column, SOLID_TRUE);
+
 			}
 
 			for (int i = 0; i < this.board.gridSize(); i++) {
@@ -77,154 +87,402 @@ public class GameLogic {
 			}
 		}
 
-		// start in grid0 move over in grid1 in the same row as grid0
-		// record the grid0 column, and the grid1 column
-		// the grid2 row is the grid1 column the grid2 column is the grid0 column
 
 		for (int i = 0; i < this.board.gridSize(); i++) {
-			int row = findCellInColumn(this.correctCells, 0, i);
-			int column = findCellInRow(this.correctCells, 1, row);
+			int row = findCellInColumn(this.correctCells, 0, i, SOLID_TRUE);
+			int column = findCellInRow(this.correctCells, 1, row, SOLID_TRUE);
 
-			this.setRow(this.correctCells, 2, column, 2);
-			this.setColumn(this.correctCells, 2, i, 2);
-			setCorrectCell(2, column, i, 1);
-		}
-
-
-		for (int i = 0; i < this.board.size(); i++) {
-			for (int j = 0; j < this.board.gridSize(); j++) {
-				String row = "[ ";
-				for (int k = 0; k < this.board.gridSize(); k++) {
-					int cell = this.getCorrectCell(i, j, k);
-					row += cell + ", ";
-					// this.board.getGrid(i).setCell(j, k, cell);
-				}
-				System.out.println(row + " ]");
-			}
-			System.out.println();
-		}
-
-		for (int i = 0; i < this.board.size(); i++) {
-			for (int j = 0; j < this.board.gridSize(); j++) {
-				String row = "[ ";
-				for (int k = 0; k < this.board.gridSize(); k++) {
-					int cell = this.getCell(i, j, k);
-					row += cell + ", ";
-					// this.board.getGrid(i).setCell(j, k, cell);
-				}
-				System.out.println(row + " ]");
-			}
-			System.out.println();
+			this.setRow(this.correctCells, 2, column, SOLID_FALSE);
+			this.setColumn(this.correctCells, 2, i, SOLID_FALSE);
+			setCorrectCell(2, column, i, SOLID_TRUE);
 		}
 	}
 
+	/**
+	 * sets the state to that of a previous one in undostates arrayList
+	 */
+	public void undo() {
 
-	// method to search cells in row of grid
-	private int findCellInRow(int[] cells, int grid, int row) {
+		if(!undoStates.isEmpty())
+			this.cells = this.undoStates.remove(undoStates.size() - 1);
+		updateBoard();
+
+	}
+
+	/**
+	 *
+	 * @param numberOfClues the amount of clues wanted to be displayed
+	 * @return the string of clues requested
+	 */
+	public String[] clues(int numberOfClues) {
+		if (getInstance() == null)
+			return null;
+		String[][] collections = this.board.getCollections();
+		ArrayList<String> clueBuffer = new ArrayList<String>();
+		for(int i=0;i<this.correctCells.length;i++){
+
+			int grid = (i - i % (this.board.gridSize() * this.board.gridSize())) / (this.board.gridSize() * this.board.gridSize());
+			int row = (i - i % (this.board.gridSize())) / (this.board.gridSize()) % this.board.gridSize();
+			int col = (i - (grid * this.board.gridSize() * this.board.gridSize()) - row * this.board.gridSize()) % this.board.gridSize();
+
+			if(this.getCorrectCell(grid, row, col) == SOLID_TRUE) {
+				switch(grid){
+					case 0:
+						clueBuffer.add(collections[0][col+1] + " " + collections[2][row+1]);
+
+						break;
+					case 1:
+						clueBuffer.add(collections[2][row+1] + " " + collections[1][col+1]);
+
+						break;
+					case 2:
+						clueBuffer.add(collections[0][col+1] + " " + collections[1][row+1]);
+
+						break;
+
+				}
+			}
+		}
+			String[] ret = new String[clueBuffer.size()];
+			for(int i = 0; i < ret.length; i++){
+				ret[i] = clueBuffer.remove((int) Math.floor(Math.random() * clueBuffer.size()));
+			}
+
+		this.clues = ret;
+		this.clueIndex = numberOfClues - 2;
+
+		return this.hint();
+	}
+
+	/**
+	 *
+	 * @return returns a list of hints to be used
+	 */
+	public String[] hint() {
+		if (this.clueIndex < this.clues.length - 1) {
+			this.clueIndex++;
+			String[] clueBuffer = new String[this.clueIndex + 1];
+			for (int i = 0; i <= this.clueIndex; i++) {
+				clueBuffer[i] = this.clues[i];
+			}
+			return clueBuffer;
+		} else return this.clues;
+	}
+
+	/**
+	 *
+	 * @param cells all cells
+	 * @param grid grid index of cell
+	 * @param row row index of cell
+	 * @param value value of cell (Blank, X, O...)
+	 * @return returns cell index in row
+	 */
+	private int findCellInRow(int[] cells, int grid, int row, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
-			if (getCellInGiantArray(cells, grid, row, i) == 1)
+			if (getCellInGiantArray(cells, grid, row, i) == value)
+
 				return i;
 		}
 		return -1;
 	}
 
-	// method to search cells in column of grid
-	private int findCellInColumn(int[] cells, int grid, int column) {
+	/**
+	 *
+	 * @param cells all cells
+	 * @param grid grid index of cell
+	 * @param row row index of cell
+	 * @param value value of cell (Blank, X, O...)
+	 * @return returns cell index in col
+	 */
+	private int findCellInColumn(int[] cells, int grid, int column, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
-			if (getCellInGiantArray(cells, grid, i, column) == 1)
+			if (getCellInGiantArray(cells, grid, i, column) == value)
+
 			return i;
 		}
 		return -1;
 	}
 
-	// private method to set every cell in this row
+
+	/**
+	 *
+	 * @param cells all cells
+	 * @param grid grid index of cell
+	 * @param row row index of cell
+	 * @param value value of cell (Blank, X, O...)
+	 */
+
 	private void setRow(int[] cells, int grid, int row, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			setCellInGiantArray(cells, grid, row, i, value);
 		}
 	}
 
-	// private method to set every cell in this column
+
+	/**
+	 *
+	 * @param cells all cells
+	 * @param grid grid index
+	 * @param column  col for cell
+	 * @param value value of cell (Blank, X, O...)
+	 */
+
 	private void setColumn(int[] cells, int grid, int column, int value) {
 		for (int i = 0; i < this.board.gridSize(); i++) {
 			setCellInGiantArray(cells, grid, i, column, value);
 		}
 	}
 
-	// macro getter
+
+	/**
+	 *
+	 * @param cells all cells
+	 * @param gridIndex grid index
+	 * @param rowIndex row of cell
+	 * @param columnIndex col of cell
+	 * @return returns value of cell (Blank, X, O...)
+	 * responsible for getting a cell
+	 */
+
 	private int getCellInGiantArray(int[] cells, int gridIndex, int rowIndex, int columnIndex) {
 		return cells[gridIndex * this.board.gridSize() * this.board.gridSize() + rowIndex * this.board.gridSize() + columnIndex];
 	}
 
-	// macro setter
+
+	/**
+	 *
+	 * @param cells all cells
+	 * @param gridIndex index of grid
+	 * @param rowIndex row index of cell
+	 * @param columnIndex col index of cell
+	 * @param value value of cell (Blank, X, O...)
+	 * responsible of setting cells
+	 */
+
 	private void setCellInGiantArray(int[] cells, int gridIndex, int rowIndex, int columnIndex, int value) {
 		cells[gridIndex * this.board.gridSize() * this.board.gridSize() + rowIndex * this.board.gridSize() + columnIndex] = value;
 	}
 
-	// getter for the correct cell correction
+
+/**
+ *
+ * @param gridIndex index of grid
+ * @param rowIndex row of cell
+ * @param columnIndex col of cell
+ * @return retruns the correct copy of the cell to reference
+ */
+
 	public int getCorrectCell(int gridIndex, int rowIndex, int columnIndex) {
 		return this.getCellInGiantArray(this.correctCells, gridIndex, rowIndex, columnIndex);
 	}
 
-	// setter for the correct cell correction
+
+	/**
+	 *
+	 * @param gridIndex index of the grid
+	 * @param rowIndex row cell of grid
+	 * @param columnIndex col cell of grid
+	 * @param value value of cell
+	 */
+
 	public void setCorrectCell(int gridIndex, int rowIndex, int columnIndex, int value) {
 		this.setCellInGiantArray(this.correctCells, gridIndex, rowIndex, columnIndex, value);
 	}
 
-	// get method
+
+	/**
+	 *
+	 * @param gridIndex index of the grid
+	 * @param rowIndex row cell of grid
+	 * @param columnIndex col cell of grid
+	 * @param value value of cell
+	 */
+
 	public int getCell(int gridIndex, int rowIndex, int columnIndex) {
 		return this.getCellInGiantArray(this.cells, gridIndex, rowIndex, columnIndex);
 	}
 
-	// set method to set other cells in gridpane
+
+	/**
+	 *
+	 * @param gridIndex index of the grid
+	 * @param rowIndex row cell of grid
+	 * @param columnIndex col cell of grid
+	 * @param value value of cell
+	 */
+
 	public void setCell(int gridIndex, int rowIndex, int columnIndex, int value) {
 		this.setCellInGiantArray(this.cells, gridIndex, rowIndex, columnIndex, value);
 	}
 
-	// get method for clues
-	public String[] getClues() {
-		return this.clues;
+
+	/**
+	 *
+	 * @return the current board that GameLogic is using
+	 */
+	public Board getBoard() {
+		return this.board;
 	}
 
-	//
-	public void cellClicked (int gridIndex, int rowIndex, int columnIndex) {
-		System.out.println(gridIndex + " " + rowIndex + " " + columnIndex);
+	/**
+	 *
+	 * @param cell current cell clicked
+	 * @return if the cell is true to reference
+	 * checking to see if the current cell is solid or not
+	 */
+	private boolean isSolid(int cell) {
+		return cell == BLANK || cell == SOLID_TRUE || cell == SOLID_FALSE;
+	}
 
-		int cellValue = this.getCell(gridIndex, rowIndex, columnIndex);
+	/**
+	 *
+	 * @param cell current cell clicked
+	 * @return if the cell is true to reference
+	 * checking to see if the cell is correct
+	 */
+	private boolean isTrue(int cell) {
+		return cell == SOLID_TRUE || cell == TEMP_TRUE;
+	}
+
+	/**
+	 * clears errors from the board
+	 * Christian
+	 */
+	public void clearErrors() {
+
+				for (int i = 0; i < this.board.size(); i++) {
+						for (int j = 0; j < this.board.gridSize(); j++) {
+								for (int k = 0; k < this.board.gridSize(); k++) {
+										if (this.getCell(i, j, k) != BLANK) {
+											if (this.isTrue(this.getCorrectCell(i, j, k)) != this.isTrue(this.getCell(i, j, k))) {
+												this.setCell(i, j, k, BLANK);
+											}
+										}
+								}
+						}
+				}
+				this.updateBoard();
+		}
+
+
+
+	public void cellClicked (int grid, int row, int column) {
+
+		int[] copy = new int[this.cells.length];
+		for(int i = 0; i<this.cells.length;i++){
+			copy[i] = cells[i];
+		}
+
+		 this.undoStates.add(copy);
+
+		int cellValue = this.getCell(grid, row, column);
 		switch (cellValue) {
 			// blank
-			case 0:
-				this.setCell(gridIndex, rowIndex, columnIndex, 4);
+			case BLANK:
+				this.setCell(grid, row, column, TEMP_FALSE);
 				break;
 			// solid true O
-			case 1:
-				this.setCell(gridIndex, rowIndex, columnIndex, 0);
+			case SOLID_TRUE:
+				this.setCell(grid, row, column, BLANK);
 				break;
 			// solid false X
-			case 2:
-				this.setCell(gridIndex, rowIndex, columnIndex, 3);
+			case SOLID_FALSE:
+				this.setCell(grid, row, column, TEMP_TRUE);
 				break;
-			// temp true O
-			case 3:
-				this.setCell(gridIndex, rowIndex, columnIndex, 0);
+			// temp true o
+			case TEMP_TRUE:
+				for (int i = 0; i < this.board.gridSize(); i++) {
+					if (this.getCell(grid, i, column) == TEMP_FALSE)
+						this.setCell(grid, i, column, BLANK);
+				}
+				for (int i = 0; i < this.board.gridSize(); i++) {
+					if (this.getCell(grid, row, i) == TEMP_FALSE)
+					this.setCell(grid, row, i, BLANK);
+				}
+				this.setCell(grid, row, column, BLANK);
 				break;
 			// temp false X
-			case 4:
-				this.setCell(gridIndex, rowIndex, columnIndex, 3);
+			case TEMP_FALSE:
+				// check to see if there are any "true" cells already in the same row or column
+				boolean trueOrTempTrueInSameRowOrColumn = false;
+				for (int i = 0; i < this.board.gridSize(); i++) {
+					for (int j = 0; j < this.board.gridSize(); j++) {
+						int cell = this.getCell(grid, i, j);
+						if ((i == row || j == column) && isTrue(cell))
+							trueOrTempTrueInSameRowOrColumn = true;
+					}
+				}
+
+				// if there is a "true" cell in the same row or column, noop
+				if (!trueOrTempTrueInSameRowOrColumn) {
+					for (int i = 0; i < this.board.gridSize(); i++) {
+						for (int j = 0; j < this.board.gridSize(); j++) {
+							int cell = this.getCell(grid, i, j);
+							if ((i == row || j == column) && cell == BLANK) {
+								this.setCell(grid, i, j, TEMP_FALSE);
+							}
+						}
+					}
+
+					this.setCell(grid, row, column, TEMP_TRUE);
+
+					// next to loops check for win -Christian
+					// checks the correct number of spaces
+					int correctNum = 0;
+						for (int i = 0;i < this.board.size(); i++) {
+							for (int j = 0; j < this.board.gridSize(); j++) {
+								for (int k = 0; k < this.board.gridSize(); k++) {
+									if(this.getCorrectCell(i, j, k) == SOLID_TRUE){
+										correctNum++;
+									}
+								}
+							}
+						}
+					// checks to see if all the correct sp
+					int currentNum = 0;
+					for (int i = 0;i < this.board.size(); i++) {
+						for (int j = 0; j < this.board.gridSize(); j++) {
+							for (int k = 0; k < this.board.gridSize(); k++) {
+								if(((this.getCorrectCell(i, j, k) == SOLID_TRUE) && (this.getCell(i, j, k) == SOLID_TRUE)) ||
+									((this.getCorrectCell(i, j, k) == SOLID_TRUE) && (this.getCell(i, j, k) == TEMP_TRUE))){
+									currentNum++;
+									}
+							}
+						}
+					}
+
+
+					if(currentNum == correctNum) {
+						this.updateBoard();
+						SceneController.getInstance().alert();
+					}
+				}
+
 				break;
 		}
 
 		// is solid?
-		if (cellValue == 0 || cellValue == 1 || cellValue == 2) {
 
+		if (isSolid(cellValue)) {
+			for (int i = 0; i < this.board.size(); i++) {
+				for (int j = 0; j < this.board.gridSize(); j++) {
+					for (int k = 0; k < this.board.gridSize(); k++) {
+						if ((!isSolid(this.getCell(i, j, k))) && (i != grid || j != row || k != column)) {
+							this.setCell(i, j, k, this.getCell(i, j, k) == TEMP_TRUE ? SOLID_TRUE : SOLID_FALSE);
+						}
+					}
+				}
+			}
 		}
-
-		// this.board.getGrid(gridIndex).setCell(rowIndex, columnIndex, this.getCell(gridIndex, rowIndex, columnIndex));
 		this.updateBoard();
 	}
 
-	// private method to update board's entries
+	/**
+	 * updates the board
+	 */
 	private void updateBoard() {
+		// update the board
+
 		for (int i = 0; i < this.board.size(); i++) {
 			for (int j = 0; j < this.board.gridSize(); j++) {
 				for (int k = 0; k < this.board.gridSize(); k++) {

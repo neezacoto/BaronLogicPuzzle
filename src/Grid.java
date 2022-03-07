@@ -1,22 +1,17 @@
-import javafx.event.ActionEvent;
+/**
+ * @author: Arjun
+ * 2/26/2022
+ */
+
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
+
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.Node;
 
 /**
- * @author: Christian
+ * Responsible for creating the grids on the board
  */
 
 public class Grid extends TilePane {
@@ -24,7 +19,7 @@ public class Grid extends TilePane {
 	private int size;
 
 	Grid(int size) {
-		// System.out.println("grid");
+
 		this.size = size;
 		double gap = 5.0d;
 		this.setHgap(gap);
@@ -50,19 +45,22 @@ public class Grid extends TilePane {
 
 					Node label = (Node) ((event.getTarget() instanceof Label) ? event.getTarget() : ((Node) event.getTarget()).getParent());
 
-					int test = Grid.this.getChildren().indexOf(label);
-					GameLogic.getInstance().cellClicked(grid, (test - test % Grid.this.size)/Grid.this.size, test % Grid.this.size);
 
-					// if (cell.getText().equals(spacing))
-					// 	cell.setText(spacing + "X");
-					// else if (cell.getText().equals(spacing + "X")) {
-					// 	cell.setText(spacing + "O");
-					// } else cell.setText(spacing);
+					int index = Grid.this.getChildren().indexOf(label);
+					GameLogic.getInstance().cellClicked(grid, (index - index % Grid.this.size) / Grid.this.size, index % Grid.this.size);
+
 				}
 			});
 			this.getChildren().add(cell);
 		}
 	}
+
+	/**
+	 * 
+	 * @param row index of cell
+	 * @param column index of cell
+	 * @return value of the cell
+	 */
 
 	public int getCell(int row, int column) {
 		String str = ((Label) this.getChildren().get(row * this.size + column)).getText();
@@ -77,6 +75,14 @@ public class Grid extends TilePane {
 				return 0;
 		}
 	}
+
+
+	/**
+	 * 
+	 * @param row index
+	 * @param column index
+	 * @param value setting the game values (blank,X,O)
+	 */
 
 	public void setCell(int row, int column, int value) {
 		char val;
@@ -94,6 +100,10 @@ public class Grid extends TilePane {
 		}
 		((Label) this.getChildren().get(row * this.size + column)).setText("   " + val);
 	}
+
+	/**
+	 * resets the grid
+	 */
 
 	public void resetGrid() {
 		for (int i = 0; i < this.getChildren().size(); i++) {

@@ -1,0 +1,16 @@
+[GameLogic]++->[GameLogic]++->[Board]<>->[Grid]
+[Board]->[CSVReader]
+[GameLogic]->[SceneController]++->[SceneController]->[GameLogic]
+[Application]^[Tester]->[SceneController]
+
+[Tester| +start(): void; +main(): void]
+
+[SceneController| -boardSizes: ChoiceBox<String>; -sizes: String[]; -startButton: Button; -myCluesView: TextArea; -playerBoard: Board; -boardArea: BorderPane; - clearErrors: Button; -hint: Button; -scenePane: BorderPane; -startOver: Button; -leftPane: SplitPane; -topPane: SplitPane; -stage: Stage; -undo: Button; -root: Parent; -instance: SceneController; +setHeaderCells(): void; -scene: Scene; +switchToSceneGame(event: ActionEvent): void; +SceneController(); +hint(event: ActionEvent): void; +initialize(arg0: URL, arg1: ResourceBundle): void; +startOver(event: ActionEvent): void; +clueCompile(clues: String[]): String; +undo(event: ActionEvent): void; +setSize(event: ActionEvent): void; +clearErrors(event: ActionEvent): void; +alert(): void]
+
+[TilePane]^[Grid| -cell_size: double; -size: int; Grid(size: int); +getCell(row: int, column: int); +setCell(row: int, column: int, value: int): void; +resetGrid(): void]
+
+[CSVReader| +readFile(filename: String): String[]]
+
+[GridPane]^[Board| -grids: Grid[]; -size: int; -gridSize: int; -collections: String[][]; Board(size: int, gridSize: int); +getCollection: String[][]; +size(): int; +gridSize(): int; +getCollections(): String[][]; +getGrid(index: int): Grid]
+
+[GameLogic| -instance: GameLogic; +BLANK: int; +SOLID_TRUE: int; +SOLID_FALSE: int; +TEMP_TRUE: int; +TEMP_FALSE: int; -correctCells: int[]; -cells: int[]; -board: Board; -clues: String[]; -clueIndex: int; -undoStates: ArrayList<int[]>; +getInstance(): GameLogic; +newInstance(board: Board): GameLogic; -GameLogic(); -GameLogic(board: Board); +undo(): void; +clues(numberOfClues: int): String[]; +hint(): String[]; -findCellInRow(cells: int[], grid: int, row: int, value: int): int; -findCellInColumn(cells: int[], grid: int, column: int, value: int): int; -setRow(cells: int[], grid: int, row: int, value: int): void; -setColumn(celss: int[], grid: int, column: int, value: int): void; -getCellInGiantArray(cells: int[], gridIndex: int, rowIndex: int, columnIndex: int): int; -setCellInGiantArray(cells: int[], gridIndex: int, rowIndex: int, columnIndex: int, value: int): void; +getCorrectCell(gridIndex: int, rowIndex: int, columnIndex: int): int; +setCorrectCell(cells: int[], gridIndex: int, rowIndex: int, columnIndex: int, value: int): void; +getCell(gridIndex: int, rowIndex: int, columnIndex: int): int; +setCell(gridIndex: int, rowIndex: int, columnIndex: int, value: int): void; +getBoard(): Board; -isSolid(cell: int): boolean; -isTrue(cell: int): boolean; -isFalse(cell: int): boolean; +clearErrors(): void; +cellClicked(grid: int, row: int, column: int): void; -updateBoard(): void]
