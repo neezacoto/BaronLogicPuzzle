@@ -4,22 +4,22 @@
  */
 
 import javafx.event.EventHandler;
+
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.Node;
 
 /**
  * Responsible for creating the grids on the board
  */
+
 public class Grid extends TilePane {
 	private static final double cell_size = 25 * 1.5;
 	private int size;
 
 	Grid(int size) {
+
 		this.size = size;
 		double gap = 5.0d;
 		this.setHgap(gap);
@@ -45,19 +45,23 @@ public class Grid extends TilePane {
 
 					Node label = (Node) ((event.getTarget() instanceof Label) ? event.getTarget() : ((Node) event.getTarget()).getParent());
 
+
 					int index = Grid.this.getChildren().indexOf(label);
 					GameLogic.getInstance().cellClicked(grid, (index - index % Grid.this.size) / Grid.this.size, index % Grid.this.size);
+
 				}
 			});
 			this.getChildren().add(cell);
 		}
 	}
+
 	/**
 	 * 
 	 * @param row index of cell
 	 * @param column index of cell
 	 * @return value of the cell
 	 */
+
 	public int getCell(int row, int column) {
 		String str = ((Label) this.getChildren().get(row * this.size + column)).getText();
 		char val = str.substring(str.length() - 1).charAt(0);
@@ -72,12 +76,14 @@ public class Grid extends TilePane {
 		}
 	}
 
+
 	/**
 	 * 
 	 * @param row index
 	 * @param column index
 	 * @param value setting the game values (blank,X,O)
 	 */
+
 	public void setCell(int row, int column, int value) {
 		char val;
 		switch(value) {
@@ -98,6 +104,7 @@ public class Grid extends TilePane {
 	/**
 	 * resets the grid
 	 */
+
 	public void resetGrid() {
 		for (int i = 0; i < this.getChildren().size(); i++) {
 			((Label) this.getChildren().get(i)).setText("   ");

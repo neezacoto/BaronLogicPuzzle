@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * Responsible for redering the grids from Grid.java into a table
+
  */
 public class Board extends GridPane {
 	private Grid[] grids;
@@ -18,9 +19,11 @@ public class Board extends GridPane {
 	// constructor
 	Board(int size, int gridSize) {
 
+
 		this.grids = new Grid[size];
 		this.size = size;
 		this.gridSize = gridSize;
+
 
 		 this.setHgap(5.0d);
 		 this.setVgap(5.0d);
@@ -70,10 +73,12 @@ public class Board extends GridPane {
 		return this.size;
 	}
 
+
 	/**
 	 *
 	 * @return size of each grid
 	 */
+
 	public int gridSize() {
 		return this.gridSize;
 	}
@@ -91,6 +96,7 @@ public class Board extends GridPane {
 	 * @param index index of the grid (e.g 3x4: 0,1,2)
 	 * @return
 	 */
+
 	public Grid getGrid(int index) {
 		return this.grids[index];
 	}

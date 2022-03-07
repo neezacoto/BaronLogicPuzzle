@@ -1,3 +1,4 @@
+
 /**
  * @author Christian
  * 2/25/2022
@@ -30,6 +31,7 @@ public class Tester extends Application {
 
 		} catch(Exception e) {
 		 e.printStackTrace();
+
 		}
 	}
 

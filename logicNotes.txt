@@ -1,0 +1,17 @@
+When we click on a blank cell
+That cell becomes a temp X
+
+When we click on a temp X
+Check if there is an O or temp O in the same row or column {
+	noop or warning
+} else {
+	That cell becomes a temp O and any blank cells in it's row & column become temp Xs
+}
+Check if win
+
+When we click on a temp O
+That cell becomes blank, and any temp Xs in the same row or column become blank
+
+When we click on a solid cell, in any grid all temp cells solidify
+
+Blank cells count as solid cells
