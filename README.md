@@ -1,4 +1,19 @@
-# CS-225-Assignment-2
+# Presentation
+### This is a game inspired by Brians Logic Puzzles at (http://www.logic-puzzles.org/)
+#### Basic Game Functions
+- ability to choose board size
+- the board auto generates puzzles
+- hint will populate the clues box
+- clear errors will clear anything wrong with the board
+- undo will allow the user to return to previous states of the board
+- start over will clear the board
+![gameFunction](https://cdn.discordapp.com/attachments/857973303880187916/950453575279067146/show.gif)
+#### Upon Completion
+![win](https://cdn.discordapp.com/attachments/857973303880187916/950453575673327666/win.gif)
+#### Known Bug
+Upon pressing start over the hints button stops functionality. This is because instead of clearing the board we create a new board instance, this seems at first fast and easy, but doing this, the board loses it's reference to it's hints update. This could be easily solved by resetting all the cells manually.
+# Project Discription
+## CS-225-Assignment-2
 
 Now that you have played the puzzle games (http://www.logic-puzzles.org/) you will write the program for it.
 Your program will introduce one puzzle only, but your code should be written such that it can be easily extended to offer more puzzles.
