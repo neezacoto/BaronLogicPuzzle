@@ -1,6 +1,6 @@
 # Presentation
 ### This is a game inspired by Brians Logic Puzzles at (http://www.logic-puzzles.org/)
-#### Basic Game Functions
+#### Basic Game Functions:
 - Ability to choose board size
 - The board auto generates puzzles
 - Hint will populate the clues box
@@ -15,16 +15,16 @@ Upon pressing start over the hints button stops functionality. This is because i
 ### What I Learned
 
 Key Takeaways:
-- Learning how to use fxml with JavaFX
+- Learning how to use FXML with JavaFX
 - Working as a team to connect the front-end with the back-end in a JavaFX application
 - Debugging code partners code using file sharing 
 - Using scene builder to speed up UI development
-- Strengthening my java workflow and fundementals
+- Strengthening my java workflow and fundamentals
 - Getting comfortable with developmental sprints with a team
 
 Key Visual Elements:
 - Responsive to window resizing
-- Minimilist and clean design that allows for intuitve and clutterless UX
+- Minimalist and clean design that allows for intuitive and clutterless UX
 - User Feedback with every user action
 # Project Discription
 ## CS-225-Assignment-2
