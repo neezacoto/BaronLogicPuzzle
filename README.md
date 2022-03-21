@@ -10,8 +10,6 @@
 ![gameFunction](https://cdn.discordapp.com/attachments/857973303880187916/950453575279067146/show.gif)
 #### Upon Completion
 ![win](https://cdn.discordapp.com/attachments/857973303880187916/950453575673327666/win.gif)
-#### Known Bug
-Upon pressing start over the hints button stops functionality. This is because instead of clearing the board we create a new board instance, this seems at first fast and easy, but doing this, the board loses it's reference to it's hints update. This could be easily solved by resetting all the cells manually.
 ### What I Learned
 
 Key Takeaways:
