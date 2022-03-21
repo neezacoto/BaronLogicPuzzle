@@ -323,19 +323,34 @@ public class GameLogic {
 	 */
 	public void clearErrors() {
 
-				for (int i = 0; i < this.board.size(); i++) {
-						for (int j = 0; j < this.board.gridSize(); j++) {
-								for (int k = 0; k < this.board.gridSize(); k++) {
-										if (this.getCell(i, j, k) != BLANK) {
-											if (this.isTrue(this.getCorrectCell(i, j, k)) != this.isTrue(this.getCell(i, j, k))) {
-												this.setCell(i, j, k, BLANK);
-											}
-										}
+		for (int i = 0; i < this.board.size(); i++) {
+				for (int j = 0; j < this.board.gridSize(); j++) {
+						for (int k = 0; k < this.board.gridSize(); k++) {
+								if (this.getCell(i, j, k) != BLANK) {
+									if (this.isTrue(this.getCorrectCell(i, j, k)) != this.isTrue(this.getCell(i, j, k))) {
+										this.setCell(i, j, k, BLANK);
+									}
 								}
 						}
 				}
-				this.updateBoard();
 		}
+		this.updateBoard();
+	}
+
+	/**
+	 * Clears the board 
+	 * Christian
+	 */
+	public void clearBoard() {
+		for (int i = 0; i < this.board.size(); i++) {
+			for (int j = 0; j < this.board.gridSize(); j++) {
+				for (int k = 0; k < this.board.gridSize(); k++) {						
+					this.setCell(i, j, k, BLANK);
+				}
+			}
+		}
+		this.updateBoard();
+	}
 
 
 

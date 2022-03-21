@@ -243,9 +243,7 @@ public class SceneController implements Initializable {
 			alert.setContentText("clicking 'ok' will wipe the board contents:");
 
 			if(alert.showAndWait().get() == ButtonType.OK) {
-					Board board = GameLogic.getInstance().getBoard();
-					GameLogic.newInstance(new Board(board.size(), board.gridSize()));
-					boardArea.setCenter(GameLogic.getInstance().getBoard());
+				GameLogic.getInstance().clearBoard();
 			}
 	}
 
